@@ -4,13 +4,8 @@ pipeline {
     agent any
 
     environment {
-        CERT_PASSWORD = credentials('CERT_PASSWORD')
-        IMAGE_NAME = "mrudul0707/dotnet-app"
-        PASSWORD = credentials('dockerhub')
-        REGISTRY = "https://registry-1.docker.io/v2/"
-        USER = "mrudulnarkhede90@gmail.com"
-        APP_NAME = "dotnet-app"
-        DOCKER_HUB_EMAIL = "mrudulnarkhede90@gmail.com"
+    
+        REGISTRY = "docker.io"
     
 }
 
@@ -19,6 +14,19 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'master', url: 'https://github.com/mrudul0707/Devops_Project.git'
+            }
+        }
+
+         stages {
+        stage('Docker Login') {
+            steps {
+                script {
+                    // Use withCredentials to inject the username and password securely
+                    withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        // Docker login using the credentials
+                        sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin $DOCKER_REGISTRY"
+                    }
+                }
             }
         }
       
