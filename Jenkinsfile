@@ -7,7 +7,8 @@ pipeline {
         CERT_PASSWORD = credentials('CERT_PASSWORD')
         IMAGE_NAME = "mrudul0707/dotnet-app"
         PASSWORD = credentials('dockerhub')
-        REGISTRY = "https://index.docker.io/v1/"
+        REGISTRY ="https://registry-1.docker.io/v2/"
+"
         USER = "mrudul0707"
         APP_NAME = "dotnet-app"
         DOCKER_HUB_EMAIL = "mrudulnarkhede90@gmail.com"
