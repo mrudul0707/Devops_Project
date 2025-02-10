@@ -4,13 +4,7 @@ pipeline {
     agent any
 
     environment {
-    CERT_PASSWORD = credentials('CERT_PASSWORD')
-    IMAGE_NAME = "mrudul0707/dotnet-app"
-    PASSWORD = credentials('dockerhub')
-    REGISTRY = "https://registry-1.docker.io/v2/"
-    USER = "mrudul0707"
-    APP_NAME = "dotnet-app"
-    DOCKER_HUB_EMAIL = "mrudulnarkhede90@gmail.com"
+    
 }
 
 
@@ -20,6 +14,22 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/mrudul0707/Devops_Project.git'
             }
         }
+      
+        stage('Docker Build & Tag ') {
+            steps {
+                script{
+                withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker') {
+                  
+                 sh "docker build -t mrudul0707/dotnet-app:latest ."     
+                }
+                }
+            }
+        }
+        
+
+
+
+        
         stage('Build') {
             steps {
                 script {
