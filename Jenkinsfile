@@ -4,6 +4,13 @@ pipeline {
     agent any
 
     environment {
+        CERT_PASSWORD = credentials('CERT_PASSWORD')
+        IMAGE_NAME = "mrudul0707/dotnet-app"
+        PASSWORD = credentials('dockerhub')
+        REGISTRY = "https://index.docker.io/v1/"
+        USER = "mrudul0707"
+        APP_NAME = "dotnet-app"
+        DOCKER_HUB_EMAIL = "mrudulnarkhede90@gmail.com"
     
 }
 
@@ -15,24 +22,10 @@ pipeline {
             }
         }
       
-        stage('Docker Build & Tag ') {
-            steps {
-                script{
-                withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker') {
-                  
-                 sh "docker build -t mrudul0707/dotnet-app:latest ."     
-                }
-                }
-            }
-        }
         
-
-
-
-        
-        stage('Build') {
-            steps {
-                script {
+     stage('Build') {
+           steps {
+              script {
                     dockerBuild("${env.IMAGE_NAME}", "--build-arg CERT_PASSWORD=${env.CERT_PASSWORD}")
                 }
             }
