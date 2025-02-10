@@ -4,15 +4,15 @@ pipeline {
     agent any
 
     environment {
-        CERT_PASSWORD = credentials('CERT_PASSWORD')
-        IMAGE_NAME = "mrudul0707/dotnet-app"
-        PASSWORD = credentials('dockerhub')
-        REGISTRY ="https://registry-1.docker.io/v2/"
-"
-        USER = "mrudul0707"
-        APP_NAME = "dotnet-app"
-        DOCKER_HUB_EMAIL = "mrudulnarkhede90@gmail.com"
-    }
+    CERT_PASSWORD = credentials('CERT_PASSWORD')
+    IMAGE_NAME = "mrudul0707/dotnet-app"
+    PASSWORD = credentials('dockerhub')
+    REGISTRY = "https://registry-1.docker.io/v2/"
+    USER = "mrudul0707"
+    APP_NAME = "dotnet-app"
+    DOCKER_HUB_EMAIL = "mrudulnarkhede90@gmail.com"
+}
+
 
     stages {
         stage('Checkout') {
