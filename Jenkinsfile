@@ -10,13 +10,13 @@ pipeline {
         REGISTRY = "https://index.docker.io/v1/"
         USER = "mrudul0707"
         APP_NAME = "dotnet-app"
-        DOCKER_HUB_EMAIL = "nanditechbytes@gmail.com"
+        DOCKER_HUB_EMAIL = "mrudulnarkhede90@gmail.com"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/nanditechbytes/jenkins-k8-deployment.git'
+                git branch: 'main', url: ''
             }
         }
         stage('Build') {
