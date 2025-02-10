@@ -17,7 +17,6 @@ pipeline {
             }
         }
 
-         stages {
         stage('Docker Login') {
             steps {
                 script {
@@ -28,7 +27,7 @@ pipeline {
                     }
                 }
             }
-        }
+        
       
         
      stage('Build') {
