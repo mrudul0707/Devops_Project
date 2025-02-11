@@ -5,7 +5,7 @@ pipeline {
 
     environment {
     
-        CERT_PASSWORD = credentials('CERT_PASSWORD')
+        CERT_PASSWORD = credentials('Mrudul@123')
         IMAGE_NAME = "mrudul0707/dotnet-app"
         PASSWORD = "Mrudul@123"
         REGISTRY = "https://registry-1.docker.io/v2/"
