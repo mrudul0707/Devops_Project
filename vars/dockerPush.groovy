@@ -4,3 +4,4 @@ def call(String user, String password, String imageName, String buildId) {
         docker push $imageName:$buildId
     """
 }
+
