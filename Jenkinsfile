@@ -42,17 +42,7 @@ pipeline {
                 sh "docker rmi $IMAGE_NAME:$BUILD_ID"
             }
         }
-        stage('Create Kubernetes Secret') {
-            steps {
-                 withCredentials([
-                    string(credentialsId: 'kubeconfig', variable: 'KUBE_CONFIG')
-                ]) {
-                    script {
-                       kubeSecret ("generic", "https-cert-secret", "${env.CERT_PASSWORD}")
-              }
-            }
-          }
-        }
+       
         stage('Create Docker Registry Secret') {
             steps {
                  withCredentials([
