@@ -21,92 +21,72 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/mrudul0707/Devops_Project.git'
             }
         }
-      
-        
-     stage('Build') {
+         
+        stage('Trivy FS Scan ') {
+            steps {
+               echo 'hello'
+            }
+        }
+
+         
+        stage('SonarQube Analysis ') {
+            steps {
+                echo 'hello'
+            }
+        }
+
+        stage('Maven Build') {
            steps {
               script {
-                    dockerBuild("${env.IMAGE_NAME}", "--build-arg CERT_PASSWORD=${env.CERT_PASSWORD}")
+                  echo 'hello'
                 }
             }
         }
-        stage('Push') {
+        stage('Publish Artifacts ') {
             steps {
               script {
-                dockerPush("${env.USER}", "${env.PASSWORD}", "${env.IMAGE_NAME}", "${env.BUILD_ID}")
+               echo 'hello'
                 }
             }
         }
-        stage('Cleanup') {
+       
+    
+         stage('create docker registry secret') {
             steps {
-                sh "docker rmi $IMAGE_NAME:$BUILD_ID"
-            }
-        }
-        
-        stage('Create Kubernetes Secret') {
-            steps {
-                 withCredentials([
-                    string(credentialsId: 'kubeconfig', variable: 'KUBE_CONFIG')
-                ]) {
+                
                     script {
-                       kubeSecret ("generic", "https-cert-secret", "${env.CERT_PASSWORD}")
-              }
-            }
-          }
-        }
-        stage('Create Docker Registry Secret') {
-            steps {
-                 withCredentials([
-                    string(credentialsId: 'kubeconfig', variable: 'KUBE_CONFIG')
-                ]) {
-                    script {
-
-                        def secretName = "${APP_NAME}"
-
-                // Check if the secret already exists
-                def secretCheck = sh(script: "kubectl get secret ${secretName} --ignore-not-found", returnStdout: true).trim()
-                echo "Secret check output: '${secretCheck}'"
-
-                def secretExists = secretCheck ? true : false
-                echo "secretExists: ${secretExists}"
-
-                if (!secretExists) {
-                     // If the secret does not exist, create it
-                     sh """
-                     kubectl create secret docker-registry ${secretName} \
-                     --docker-server=https://index.docker.io/v1/ \
-                     --docker-username=${USER} \
-                     --docker-password=${PASSWORD} \
-                     --docker-email=${DOCKER_HUB_EMAIL} || true
-                     """
-                     echo "Secret ${secretName} created."
-                 } else {
-                     echo "Secret ${secretName} already exists. Skipping creation."
-                   }
-                 }
-                }
-            }
-        }
-        stage('Deploy to Kubernetes') {
-            steps {
-                 withCredentials([
-                    string(credentialsId: 'kubeconfig', variable: 'KUBE_CONFIG')
-                ]) {
-                    script {
-                        kubeDeploy ("${env.IMAGE_NAME}", "${env.APP_NAME}")
+                        echo 'hello'
                     }
-                }
+                
+            }
+        }
+
+        stage('Docker Build & Tag') {
+            steps {
+                sh "trivy image --format table -o image.html mrudul0707/my_prototype:latest"
+            }
+        }
+        stage('Trivy Image Scan ') {
+            steps {
+                echo 'hello'
+            }
+        }
+       
+        stage('Deploy to Minikube ') {
+            steps {
+                
+                    script {
+                        echo 'hello'
+                    }
+                
             }
         }
         stage('Verify Deployment') {
             steps {
-                withCredentials([
-                    string(credentialsId: 'kubeconfig', variable: 'KUBE_CONFIG')
-                ])  {
                         script {
-                         kubeVerify ("${env.APP_NAME}")
+                            echo 'hello'
                     }
-                }
+                
             }
         }
     }
